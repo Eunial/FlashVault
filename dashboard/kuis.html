@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesi Kuis & Review - FlashVault</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Sidebar Navigasi -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2>FlashVault</h2>
+      <p>Spaced Repetition Platform</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-avatar">
+        <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+      </div>
+      <div class="user-details">
+        <h4>Rama</h4>
+        <span class="user-status">Pelajar / Mahasiswa</span>
+      </div>
+    </div>
+
+    <div class="menu-group">
+      <span class="menu-label">MENU UTAMA</span>
+      <a href="../dashboard.html" class="nav-link">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Overview</span>
+      </a>
+      <a href="kelola-deck.html" class="nav-link">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Kelola Deck</span>
+      </a>
+      <a href="kuis.html" class="nav-link active">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Sesi Kuis & Review</span>
+      </a>
+      <a href="pengaturan.html" class="nav-link">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>Pengaturan Akun</span>
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <a href="../login.html" class="logout-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Keluar</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Area Kerja Utama -->
+  <main class="main-workspace">
+
+    <header class="workspace-header">
+      <div class="header-title">
+        <h1>Sesi Kuis & Review 🧠</h1>
+        <p>Mengulas deck: <strong>Fundamental Laravel & Blade</strong></p>
+      </div>
+      <div class="header-actions">
+        <a href="kelola-deck.html" class="btn-primary-sm">Ganti Deck</a>
+        <a href="../login.html" class="btn-header-logout">Keluar</a>
+      </div>
+    </header>
+
+    <section class="dashboard-section">
+      <div style="max-width: 600px; margin: 0 auto;">
+        <div
+          style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted);">
+          <span>Kartu 7 dari 20</span>
+          <span>Sisa: 13 Kartu</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- 3D Flashcard Structure -->
+      <div class="flashcard-container">
+        <div class="flashcard-3d">
+          <div class="card-face card-front">
+            <span class="card-label">PERTANYAAN</span>
+            <div class="card-question">
+              Apa fungsi utama dari sintaks <code>{{ $variable }}</code> di dalam sistem templating Blade Laravel?
+            </div>
+            <p class="card-hint"><i class="fa-solid fa-rotate"></i> Arahkan kursor untuk melihat jawaban</p>
+          </div>
+          <div class="card-face card-back">
+            <span class="card-label">JAWABAN</span>
+            <div class="card-answer-text">
+              Berfungsi untuk me-render data ke HTML, yang secara otomatis diproses menggunakan fungsi
+              <code>htmlspecialchars</code> PHP untuk mencegah serangan XSS.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-controls">
+        <button class="btn-rating btn-hard">Sulit<br><small style="font-weight: 400; font-size: 0.7rem;">Ulangi &lt;
+            1m</small></button>
+        <button class="btn-rating btn-good">Lumayan<br><small style="font-weight: 400; font-size: 0.7rem;">Review
+            10m</small></button>
+        <button class="btn-rating btn-easy">Mudah<br><small style="font-weight: 400; font-size: 0.7rem;">Review 4
+            Hari</small></button>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

@@ -1,100 +1,145 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <title>FlashVault - Interactive Flashcard & Quiz Vault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashVault - Kuasai Materi Lebih Cepat dengan Spaced Repetition</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-    <!-- Header / Navbar -->
-    <header>
-        <nav>
-            <h1>FlashVault</h1>
-            <ul>
-                <li><a href="#features">Fitur</a></li>
-                <li><a href="#explore">Jelajah Dek</a></li>
-                <li><a href="#about">Tentang Kami</a></li>
-            </ul>
-            <div>
-                <a href="login.html">Masuk</a>
-                <a href="register.html">Daftar</a>
-            </div>
-        </nav>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>FlashVault</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#fitur">Fitur</a>
+                <a href="#cara-kerja">Cara Kerja</a>
+                <a href="login.html" class="btn-link">Masuk</a>
+                <a href="register.html" class="btn-primary">Daftar Gratis</a>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero">
-            <h2>Kuasai Materi Apapun Lebih Cepat</h2>
-            <p>Platform interaktif berbasis Spaced Repetition dan Active Recall untuk meningkatkan efisiensi belajar Anda secara maksimal.</p>
-            <a href="register.html">Mulai Belajar Gratis</a>
-            <div>
-                <!-- Placeholder Ilustrasi/SVG -->
-                <img src="https://via.placeholder.com/500x300" alt="Ilustrasi FlashVault">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-text">
+                <span class="hero-badge"><i class="fa-solid fa-bolt"></i> Metode Spaced Repetition</span>
+                <h1>Simpan Ilmu Lebih Lama, Belajar Lebih Efektif.</h1>
+                <p>FlashVault membantu Anda mengingat kosa kata, algoritma, dan materi ujian dengan algoritma
+                    pengulangan berkala secara terstruktur.</p>
+                <div class="hero-actions">
+                    <a href="dashboard.html" class="btn-hero-primary">Mulai Sekarang <i
+                            class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#cara-kerja" class="btn-hero-secondary">Lihat Cara Kerja</a>
+                </div>
             </div>
-        </section>
-
-        <!-- Featured Public Decks -->
-        <section id="explore">
-            <h2>Dek Publik Populer</h2>
-            
-            <div>
-                <!-- Card 1 -->
-                article>
-                    <h3>Kosakata Bahasa Inggris Dasar</h3>
-                    <p>Kategori: Bahasa</p>
-                    <p>Jumlah Kartu: 150</p>
-                    <a href="login.html">Pelajari Dek</a>
-                </article>
-
-                <!-- Card 2 -->
-                <article>
-                    <h3>Kuis Biologi: Sistem Organ Manusia</h3>
-                    <p>Kategori: Sains</p>
-                    <p>Jumlah Kartu: 85</p>
-                    <a href="login.html">Pelajari Dek</a>
-                </article>
-
-                <!-- Card 3 -->
-                <article>
-                    <h3>Dasar Pemrograman Web (HTML & CSS)</h3>
-                    <p>Kategori: Teknologi</p>
-                    <p>Jumlah Kartu: 120</p>
-                    <a href="login.html">Pelajari Dek</a>
-                </article>
+            <div class="hero-preview">
+                <div class="preview-card-mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                        <span class="mockup-title">FlashVault Session</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="mockup-tag">Sesi Review Hari Ini</div>
+                        <div class="mockup-question">Apa fungsi utama dari metode Spaced Repetition?</div>
+                        <div class="mockup-buttons">
+                            <span class="btn-mock hard">Sulit</span>
+                            <span class="btn-mock good">Lumayan</span>
+                            <span class="btn-mock easy">Mudah</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Features Grid -->
-        <section id="features">
-            <h2>Mengapa Belajar di FlashVault?</h2>
-            
-            <div>
-                <h3>Active Recall</h3>
-                <p>Melatih otak untuk mengingat kembali informasi secara aktif guna memperkuat retensi memori jangka panjang.</p>
-            </div>
-
-            <div>
-                <h3>Spaced Repetition</h3>
-                <p>Sistem penjadwalan otomatis yang menyesuaikan waktu peninjauan kartu berdasarkan tingkat pemahaman Anda.</p>
+    <!-- Fitur Section -->
+    <section id="fitur" class="features-section">
+        <div class="section-title">
+            <h2>Mengapa Menggunakan FlashVault?</h2>
+            <p>Dirancang khusus untuk membantu mahasiswa dan profesional belajar lebih cerdas.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon bg-blue">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>Algoritma SRS</h3>
+                <p>Kartu yang sulit akan ditampilkan lebih sering, sedangkan kartu yang mudah akan dijadwalkan ulang
+                    secara otomatis.</p>
             </div>
 
-            <div>
-                <h3>Interactive Quiz</h3>
-                <p>Uji kemampuan Anda dengan mode kuis interaktif yang dilengkapi dengan analisis skor dan performa langsung.</p>
+            <div class="feature-card">
+                <div class="feature-icon bg-green">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3>Manajemen Deck Kustom</h3>
+                <p>Kelola topik pelajaran Anda dalam deck terpisah sesuai dengan kebutuhan mata kuliah atau bidang ilmu.
+                </p>
             </div>
-        </section>
-    </main>
+
+            <div class="feature-card">
+                <div class="feature-icon bg-purple">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3>Statistik Progres</h3>
+                <p>Pantau rentetan hari belajar (streak), jumlah kartu dikuasai, dan persentase akurasi jawaban Anda
+                    secara realtime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cara Kerja Section -->
+    <section id="cara-kerja" class="steps-section">
+        <div class="section-title">
+            <h2>3 Langkah Sederhana</h2>
+            <p>Mulai perjalanan belajar Anda hanya dalam hitungan menit.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h3>Buat Deck</h3>
+                <p>Tambahkan deck baru dan masukkan pertanyaan serta jawaban flashcard Anda.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h3>Lakukan Kuis</h3>
+                <p>Uji ingatan Anda dan beri nilai pada tingkat kesulitan setiap kartu.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h3>Review Otomatis</h3>
+                <p>Sistem akan menjadwalkan kartu untuk diulas kembali di waktu yang tepat.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+        <div class="cta-container">
+            <h2>Siap Meningkatkan Efisiensi Belajar Anda?</h2>
+            <p>Bergabung sekarang dan rasakan kemudahan mengingat materi pelajaran.</p>
+            <a href="register.html" class="btn-hero-primary">Daftar Akun Gratis</a>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 FlashVault. All rights reserved.</p>
-        <ul>
-            <li><a href="#hero">Beranda</a></li>
-            <li><a href="#features">Fitur</a></li>
-            <li><a href="#explore">Dek</a></li>
-        </ul>
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FlashVault. Platform Spaced Repetition Praktikum Teknik Informatika.</p>
+        </div>
     </footer>
 
 </body>
+
 </html>

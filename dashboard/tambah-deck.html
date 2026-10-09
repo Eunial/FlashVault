@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Deck Baru - FlashVault</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Sidebar Navigasi -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2>FlashVault</h2>
+      <p>Spaced Repetition Platform</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-avatar">
+        <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+      </div>
+      <div class="user-details">
+        <h4>Rama</h4>
+        <span class="user-status">Pelajar / Mahasiswa</span>
+      </div>
+    </div>
+
+    <div class="menu-group">
+      <span class="menu-label">MENU UTAMA</span>
+      <a href="../dashboard.html" class="nav-link">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Overview</span>
+      </a>
+      <a href="kelola-deck.html" class="nav-link active">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Kelola Deck</span>
+      </a>
+      <a href="kuis.html" class="nav-link">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Sesi Kuis & Review</span>
+      </a>
+      <a href="pengaturan.html" class="nav-link">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>Pengaturan Akun</span>
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <a href="../login.html" class="logout-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Keluar</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Area Kerja Utama -->
+  <main class="main-workspace">
+
+    <header class="workspace-header">
+      <div class="header-title">
+        <h1>Tambah Deck Baru ➕</h1>
+        <p>Buat wadah materi baru sebelum menambahkan kartu flashcard.</p>
+      </div>
+      <div class="header-actions">
+        <a href="kelola-deck.html" class="btn-secondary">
+          <i class="fa-solid fa-arrow-left"></i> Kembali
+        </a>
+      </div>
+    </header>
+
+    <section class="dashboard-section">
+      <div class="form-container">
+        <form action="kelola-deck.html" method="GET">
+
+          <div class="form-group">
+            <label for="namaDeck">Nama Deck <span style="color: red;">*</span></label>
+            <input type="text" id="namaDeck" class="form-control" placeholder="Contoh: Fundamental React Native"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="kategoriDeck">Kategori <span style="color: red;">*</span></label>
+            <select id="kategoriDeck" class="form-control" required>
+              <option value="" disabled selected>-- Pilih Kategori --</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Mobile Development">Mobile Development</option>
+              <option value="Frontend">Frontend</option>
+              <option value="Backend">Backend</option>
+              <option value="Data Science & ML">Data Science & ML</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="deskripsiDeck">Deskripsi / Catatan Deck</label>
+            <textarea id="deskripsiDeck" class="form-control"
+              placeholder="Rangkuman singkat tentang topik deck ini..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <a href="kelola-deck.html" class="btn-secondary">Batal</a>
+            <button type="submit" class="btn-primary-sm">Simpan Deck</button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

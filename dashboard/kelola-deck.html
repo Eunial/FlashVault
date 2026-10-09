@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelola Deck - FlashVault</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Sidebar Navigasi -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2>FlashVault</h2>
+      <p>Spaced Repetition Platform</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-avatar">
+        <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+      </div>
+      <div class="user-details">
+        <h4>Rama</h4>
+        <span class="user-status">Pelajar / Mahasiswa</span>
+      </div>
+    </div>
+
+    <div class="menu-group">
+      <span class="menu-label">MENU UTAMA</span>
+      <a href="../dashboard.html" class="nav-link">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Overview</span>
+      </a>
+      <a href="kelola-deck.html" class="nav-link active">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Kelola Deck</span>
+      </a>
+      <a href="kuis.html" class="nav-link">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Sesi Kuis & Review</span>
+      </a>
+      <a href="pengaturan.html" class="nav-link">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>Pengaturan Akun</span>
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <a href="../login.html" class="logout-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Keluar</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Area Kerja Utama -->
+  <main class="main-workspace">
+
+    <header class="workspace-header">
+      <div class="header-title">
+        <h1>Kelola Koleksi Deck 📚</h1>
+        <p>Atur, tambah, dan modifikasi seluruh flashcard Anda di sini.</p>
+      </div>
+      <div class="header-actions">
+        <a href="tambah-deck.html" class="btn-primary-sm">+ Buat Deck Baru</a>
+        <a href="../login.html" class="btn-header-logout">Keluar</a>
+      </div>
+    </header>
+
+    <section class="dashboard-section">
+      <div class="grid-2">
+        <div class="card-item">
+          <div>
+            <h4>Fundamental Laravel & Blade</h4>
+            <p>45 Kartu • Kategori: Web Development</p>
+          </div>
+          <div class="card-actions">
+            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
+            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
+                class="fa-solid fa-pen"></i> Edit</button>
+            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
+          </div>
+        </div>
+
+        <div class="card-item">
+          <div>
+            <h4>Komponen React Native</h4>
+            <p>32 Kartu • Kategori: Mobile Development</p>
+          </div>
+          <div class="card-actions">
+            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
+            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
+                class="fa-solid fa-pen"></i> Edit</button>
+            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
+          </div>
+        </div>
+
+        <div class="card-item">
+          <div>
+            <h4>Vanilla JS DOM Manipulation</h4>
+            <p>28 Kartu • Kategori: Frontend</p>
+          </div>
+          <div class="card-actions">
+            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
+            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
+                class="fa-solid fa-pen"></i> Edit</button>
+            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

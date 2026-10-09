@@ -1,48 +1,49 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masuk - FlashVault</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
-
-    <main>
-        <header>
-            <h1>FlashVault</h1>
-            <h2>Masuk ke Akun Anda</h2>
-            <p>Selamat datang kembali! Silakan masukkan detail akun Anda.</p>
-        </header>
-
-        <form action="dashboard.html" method="GET">
-            <div>
-                <label for="email">Alamat Email:</label><br>
-                <input type="email" id="email" name="email" placeholder="nama@email.com" required>
-            </div>
-            
-            <br>
-
-            <div>
-                <label for="password">Kata Sandi:</label><br>
-                <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+    <div class="auth-page-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="auth-logo">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <span>FlashVault</span>
+                </a>
+                <h2>Selamat Datang Kembali!</h2>
+                <p>Masuk untuk melanjutkan sesi belajar Anda.</p>
             </div>
 
-            <br>
+            <form action="dashboard.html" method="GET" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">Alamat Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="nama@email.com" required />
+                </div>
 
-            <div>
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Ingat Saya</label>
+                <div class="form-group">
+                    <label for="loginPassword">Kata Sandi</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required />
+                </div>
+
+                <button type="submit" class="btn-auth-submit">
+                    Masuk ke Dashboard
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Belum punya akun? <a href="register.html">Daftar Sekarang</a>
             </div>
 
-            <br>
-
-            <button type="submit">Masuk</button>
-        </form>
-
-        <br>
-
-        <p>Belum punya akun? <a href="register.html">Daftar Sekarang</a></p>
-        <p><a href="index.html">&larr; Kembali ke Beranda</a></p>
-    </main>
-
+            <a href="index.html" class="back-home-link"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+        </div>
+    </div>
 </body>
+
 </html>
