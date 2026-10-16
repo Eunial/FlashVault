@@ -24,8 +24,8 @@
                 <a href="#katalog">Katalog Deck</a>
                 <a href="#cara-kerja">Cara Kerja</a>
                 <a href="login.html" class="btn-link">Masuk</a>
-                <a href="register.html" class="btn-primary"
-                    onclick="showToast('Mengarahkan ke halaman pendaftaran...')">Daftar Gratis</a>
+                <a href="register.html" class="btn-primary" data-toast="Mengarahkan ke halaman pendaftaran...">Daftar
+                    Gratis</a>
             </nav>
         </div>
     </header>
@@ -42,16 +42,15 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="dashboard.html" class="btn-hero-primary"
-                        onclick="showToast('Masuk ke Dashboard Utama...')">Mulai Sekarang <i
-                            class="fa-solid fa-arrow-right"></i></a>
+                    <a href="dashboard.html" class="btn-hero-primary" data-toast="Masuk ke Dashboard Utama...">Mulai
+                        Sekarang <i class="fa-solid fa-arrow-right"></i></a>
                     <a href="#katalog" class="btn-hero-secondary">Coba Katalog Deck</a>
                 </div>
             </div>
 
             <!-- DOM 1: Live Flashcard Flipper -->
             <div class="hero-preview">
-                <div class="live-flashcard" onclick="flipSampleCard()">
+                <div class="live-flashcard" id="liveFlashcard">
                     <span class="card-tag" id="sampleCardTag">PERTANYAAN (KLIK UNTUK MEMBALIK)</span>
                     <div class="card-content-box" id="sampleCardContent">
                         Apa fungsi utama dari algoritma Spaced Repetition dalam
@@ -119,69 +118,16 @@
 
         <!-- Tombol Filter -->
         <div class="filter-buttons">
-            <button class="filter-btn active" onclick="filterDecks('all')">
+            <button class="filter-btn active" data-filter="all">
                 Semua Kategori
             </button>
-            <button class="filter-btn" onclick="filterDecks('web')">
-                Web Development
-            </button>
-            <button class="filter-btn" onclick="filterDecks('mobile')">
-                Mobile Dev
-            </button>
-            <button class="filter-btn" onclick="filterDecks('data')">
-                Data Science
-            </button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="mobile">Mobile Dev</button>
+            <button class="filter-btn" data-filter="data">Data Science</button>
         </div>
 
-        <!-- Grid Sampel Deck -->
-        <div class="sample-decks-grid">
-            <div class="sample-deck-card" data-category="web">
-                <span class="deck-category-badge">Web Development</span>
-                <h4>Fundamental Laravel & Blade</h4>
-                <p>
-                    Pelajari sintaks dasar templating Blade dan pengelolaan rute
-                    backend.
-                </p>
-                <a href="dashboard/kuis.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem">Buka
-                    Deck</a>
-            </div>
-
-            <div class="sample-deck-card" data-category="mobile">
-                <span class="deck-category-badge">Mobile Dev</span>
-                <h4>Komponen React Native</h4>
-                <p>Mengenal komponen dasar UI, View, Text, dan StyleSheet.</p>
-                <a href="dashboard/kuis.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem">Buka
-                    Deck</a>
-            </div>
-
-            <div class="sample-deck-card" data-category="data">
-                <span class="deck-category-badge">Data Science</span>
-                <h4>Algoritma K-Means Clustering</h4>
-                <p>
-                    Konsep dasar pengelompokan data tidak berlabel menggunakan Python.
-                </p>
-                <a href="dashboard/kuis.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem">Buka
-                    Deck</a>
-            </div>
-
-            <div class="sample-deck-card" data-category="web">
-                <span class="deck-category-badge">Web Development</span>
-                <h4>Vanilla JavaScript DOM</h4>
-                <p>Manipulasi elemen HTML, event listener, dan query selector.</p>
-                <a href="dashboard/kuis.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem">Buka
-                    Deck</a>
-            </div>
-
-            <div class="sample-deck-card" data-category="data">
-                <span class="deck-category-badge">Data Science</span>
-                <h4>Decision Tree Classifier</h4>
-                <p>
-                    Penerapan pohon keputusan untuk klasifikasi data di Google Colab.
-                </p>
-                <a href="dashboard/kuis.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem">Buka
-                    Deck</a>
-            </div>
-        </div>
+        <!-- Grid Sampel Deck: dimuat dari data/sample-decks.json lewat fetch() -->
+        <div class="sample-decks-grid" id="sampleDecksGrid" aria-live="polite"></div>
     </section>
 
     <!-- Cara Kerja Section -->
@@ -214,7 +160,7 @@
                     tepat.
                 </p>
             </div>
-        </div> 
+        </div>
     </section>
 
     <!-- DOM 3: Mini-Quiz Widget Instan Section -->
@@ -231,13 +177,13 @@
             </div>
 
             <div class="quiz-options">
-                <button class="quiz-opt-btn" onclick="answerQuiz(this, false)">
+                <button class="quiz-opt-btn" data-correct="false">
                     A. Random Guessing Method
                 </button>
-                <button class="quiz-opt-btn" onclick="answerQuiz(this, true)">
+                <button class="quiz-opt-btn" data-correct="true">
                     B. Spaced Repetition System (SRS)
                 </button>
-                <button class="quiz-opt-btn" onclick="answerQuiz(this, false)">
+                <button class="quiz-opt-btn" data-correct="false">
                     C. Cramming Before Exam
                 </button>
             </div>
@@ -253,8 +199,8 @@
             <p>
                 Bergabung sekarang dan rasakan kemudahan mengingat materi pelajaran.
             </p>
-            <a href="register.html" class="btn-hero-primary" onclick="showToast('Menuju halaman pendaftaran...')">Daftar
-                Akun Gratis</a>
+            <a href="register.html" class="btn-hero-primary" data-toast="Menuju halaman pendaftaran...">Daftar Akun
+                Gratis</a>
         </div>
     </section>
 

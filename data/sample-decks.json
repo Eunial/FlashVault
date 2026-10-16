@@ -1,0 +1,54 @@
+{
+    "decks": [
+        {
+            "id": "laravel-blade",
+            "kategori": "web",
+            "kategoriLabel": "Web Development",
+            "judul": "Fundamental Laravel & Blade",
+            "deskripsi": "Pelajari sintaks dasar templating Blade dan pengelolaan rute backend.",
+            "kartu": 45,
+            "menit": 14,
+            "level": "Pemula"
+        },
+        {
+            "id": "react-native",
+            "kategori": "mobile",
+            "kategoriLabel": "Mobile Dev",
+            "judul": "Komponen React Native",
+            "deskripsi": "Mengenal komponen dasar UI, View, Text, dan StyleSheet.",
+            "kartu": 32,
+            "menit": 10,
+            "level": "Menengah"
+        },
+        {
+            "id": "kmeans",
+            "kategori": "data",
+            "kategoriLabel": "Data Science",
+            "judul": "Algoritma K-Means Clustering",
+            "deskripsi": "Konsep dasar pengelompokan data tidak berlabel menggunakan Python.",
+            "kartu": 38,
+            "menit": 12,
+            "level": "Menengah"
+        },
+        {
+            "id": "vanilla-dom",
+            "kategori": "web",
+            "kategoriLabel": "Web Development",
+            "judul": "Vanilla JavaScript DOM",
+            "deskripsi": "Manipulasi elemen HTML, event listener, dan query selector.",
+            "kartu": 28,
+            "menit": 8,
+            "level": "Pemula"
+        },
+        {
+            "id": "decision-tree",
+            "kategori": "data",
+            "kategoriLabel": "Data Science",
+            "judul": "Decision Tree Classifier",
+            "deskripsi": "Penerapan pohon keputusan untuk klasifikasi data di Google Colab.",
+            "kartu": 41,
+            "menit": 15,
+            "level": "Lanjut"
+        }
+    ]
+}

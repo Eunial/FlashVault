@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
   <!-- Sidebar Navigasi -->
   <aside class="sidebar">
     <div class="sidebar-brand">
@@ -94,6 +93,18 @@
             </select>
           </div>
 
+          <!-- Pratinjau Deck Langsung (event change) -->
+          <div class="deck-preview" id="deckPreview" data-empty="true">
+            <span class="deck-preview-label">PRATINJAU DECK</span>
+            <div class="deck-preview-card">
+              <div class="deck-preview-icon" id="previewIcon"><i class="fa-solid fa-layer-group"></i></div>
+              <div>
+                <h4 id="previewName">Nama deck Anda</h4>
+                <span class="deck-preview-badge" id="previewBadge">Belum ada kategori</span>
+              </div>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="deskripsiDeck">Deskripsi / Catatan Deck</label>
             <textarea id="deskripsiDeck" class="form-control"
@@ -108,9 +119,9 @@
         </form>
       </div>
     </section>
-
   </main>
-
+  
+  <script src="../js/storage.js"></script>
+  <script src="../js/dashboard.js"></script>
 </body>
-
 </html>

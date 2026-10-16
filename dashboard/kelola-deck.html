@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
   <!-- Sidebar Navigasi -->
   <aside class="sidebar">
     <div class="sidebar-brand">
@@ -70,51 +69,13 @@
       </div>
     </header>
 
-    <section class="dashboard-section">
-      <div class="grid-2">
-        <div class="card-item">
-          <div>
-            <h4>Fundamental Laravel & Blade</h4>
-            <p>45 Kartu • Kategori: Web Development</p>
-          </div>
-          <div class="card-actions">
-            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
-            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
-                class="fa-solid fa-pen"></i> Edit</button>
-            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
-          </div>
-        </div>
-
-        <div class="card-item">
-          <div>
-            <h4>Komponen React Native</h4>
-            <p>32 Kartu • Kategori: Mobile Development</p>
-          </div>
-          <div class="card-actions">
-            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
-            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
-                class="fa-solid fa-pen"></i> Edit</button>
-            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
-          </div>
-        </div>
-
-        <div class="card-item">
-          <div>
-            <h4>Vanilla JS DOM Manipulation</h4>
-            <p>28 Kartu • Kategori: Frontend</p>
-          </div>
-          <div class="card-actions">
-            <a href="kuis.html" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
-            <button class="btn-sm btn-edit" style="background-color: #f3e5f5; color: #7b1fa2;"><i
-                class="fa-solid fa-pen"></i> Edit</button>
-            <button class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
-          </div>
-        </div>
-      </div>
+        <section class="dashboard-section">
+      <!-- Kartu deck dirender oleh js/dashboard.js dari localStorage -->
+      <div class="grid-2" id="deckGrid"></div>
     </section>
-
   </main>
 
+  <script src="../js/storage.js"></script>
+  <script src="../js/dashboard.js"></script>
 </body>
-
 </html>

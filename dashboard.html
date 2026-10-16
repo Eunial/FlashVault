@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
   <!-- Sidebar Navigasi -->
   <aside class="sidebar">
     <div class="sidebar-brand">
@@ -62,7 +61,7 @@
 
     <header class="workspace-header">
       <div class="header-title">
-        <h1>Selamat Datang Kembali, Rama! 👋</h1>
+        <h1>Selamat Datang Kembali, <span id="namaPengguna">Rama</span>! 👋</h1>
         <p>Berikut adalah ringkasan aktivitas dan progres belajar Anda.</p>
       </div>
       <div class="header-actions">
@@ -88,8 +87,8 @@
             <i class="fa-solid fa-layer-group" style="color: #2e7d32;"></i>
           </div>
           <span class="stat-caption">TOTAL KOLEKSI</span>
-          <div class="stat-number">12 Deck</div>
-          <span class="stat-subtext">250 total kartu</span>
+          <div class="stat-number" id="statTotalDeck">12 Deck</div>
+          <span class="stat-subtext" id="statTotalKartu">250 total kartu</span>
         </div>
 
         <div class="stat-box">
@@ -164,5 +163,9 @@
       </div>
     </section>
   </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
+
 </html>

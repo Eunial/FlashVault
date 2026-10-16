@@ -628,6 +628,94 @@ textarea.form-control {
   width: 35%;
 }
 
+/* EVENT CHANGE: PRATINJAU DECK PADA FORM TAMBAH DECK */
+.deck-preview {
+  margin-bottom: 1.5rem;
+}
+
+.deck-preview-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.deck-preview-card {
+  --accent: #90a4ae;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border: 1px dashed var(--accent);
+  border-left: 5px solid var(--accent);
+  border-radius: 10px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.deck-preview-card h4 {
+  color: var(--text-dark);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.deck-preview[data-empty="true"] h4 {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.deck-preview-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  color: #ffffff;
+  background: var(--accent);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.deck-preview-icon.pop {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+.deck-preview-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  color: #ffffff;
+  background: var(--accent);
+  transition: background-color 0.3s ease;
+}
+
+/* WEB STORAGE: TOMBOL EDIT & STATE KOSONG PADA KELOLA DECK */
+.btn-edit.btn-rename {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--card-surface);
+  border: 2px dashed var(--soft-border);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
