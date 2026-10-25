@@ -20,11 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Simpan nama + email (TANPA kata sandi) agar dashboard bisa menyapa pengguna
-        if (typeof FlashStore !== "undefined" && !FlashStore.setUser({ nama, email })) {
-            alert("Peringatan: nama Anda tidak bisa disimpan karena penyimpanan browser tidak tersedia.");
-        }
-
         alert(`Selamat datang, ${nama}! Akun Anda berhasil dibuat.`);
     });
 });

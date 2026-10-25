@@ -1,3 +1,30 @@
+<?php
+require_once __DIR__ . '/../includes/auth.php';
+require_login('../login.php');
+$user = current_user();
+$nama = $user['nama'];
+$email = $user['email'];
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $namaBaru  = trim($_POST['nama'] ?? '');
+    $emailBaru = trim($_POST['email'] ?? '');
+
+    if ($namaBaru === '' || $emailBaru === '') {
+        $error = 'Nama dan email wajib diisi.';
+    } elseif (!filter_var($emailBaru, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Format email tidak valid.';
+    } else {
+        $_SESSION['user'] = ['nama' => $namaBaru, 'email' => $emailBaru];
+        setcookie('fv_nama', $namaBaru, time() + 7 * 24 * 60 * 60, '/');
+        setcookie('fv_email', $emailBaru, time() + 7 * 24 * 60 * 60, '/');
+        header('Location: ../dashboard.php');
+        exit;
+    }
+    $nama = $namaBaru; // pertahankan isian jika error
+    $email = $emailBaru;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -20,10 +47,10 @@
         <!-- User Profile Card -->
         <div class="user-card">
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+                <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
             </div>
             <div class="user-details">
-                <h4>Rama</h4>
+                <h4><?= e($nama) ?></h4>
                 <span class="user-status">Pelajar / Mahasiswa</span>
             </div>
         </div>
@@ -31,19 +58,19 @@
         <!-- Menu Utama -->
         <div class="menu-group">
             <span class="menu-label">MENU UTAMA</span>
-            <a href="../dashboard.html" class="nav-link">
+            <a href="../dashboard.php" class="nav-link">
                 <i class="fa-solid fa-chart-pie"></i>
                 <span>Overview</span>
             </a>
-            <a href="kelola-deck.html" class="nav-link">
+            <a href="kelola-deck.php" class="nav-link">
                 <i class="fa-solid fa-layer-group"></i>
                 <span>Kelola Deck</span>
             </a>
-            <a href="kuis.html" class="nav-link">
+            <a href="kuis.php" class="nav-link">
                 <i class="fa-solid fa-graduation-cap"></i>
                 <span>Sesi Kuis & Review</span>
             </a>
-            <a href="pengaturan.html" class="nav-link active">
+            <a href="pengaturan.php" class="nav-link active">
                 <i class="fa-solid fa-user-gear"></i>
                 <span>Pengaturan Akun</span>
             </a>
@@ -51,7 +78,7 @@
 
         <!-- Sidebar Bottom / Logout -->
         <div class="sidebar-bottom">
-            <a href="../login.html" class="logout-link">
+            <a href="../logout.php" class="logout-link">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Keluar</span>
             </a>
@@ -68,14 +95,17 @@
                 <p>Kelola profil pengguna, preferensi aplikasi, dan keamanan akun Anda.</p>
             </div>
             <div class="header-actions">
-                <a href="../login.html" class="btn-header-logout">Keluar</a>
+                <a href="../logout.php" class="btn-header-logout">Keluar</a>
             </div>
         </header>
 
         <!-- Form Pengaturan -->
         <section class="dashboard-section">
             <div class="form-container">
-                <form action="../dashboard.html" method="GET">
+                <?php if ($error): ?>
+                    <div style="background:#fdecea;color:#b71c1c;padding:.7rem 1rem;border-radius:8px;margin-bottom:1rem;"><?= e($error) ?></div>
+                <?php endif; ?>
+                <form action="pengaturan.php" method="POST">
 
                     <h3
                         style="margin-bottom: 1.2rem; color: var(--text-dark); border-bottom: 1px solid var(--soft-border); padding-bottom: 0.5rem;">
@@ -85,12 +115,12 @@
 
                     <div class="form-group">
                         <label for="profNama">Nama Lengkap <span style="color: red;">*</span></label>
-                        <input type="text" id="profNama" class="form-control" value="Rama" required>
+                        <input type="text" id="profNama" name="nama" class="form-control" value="<?= e($nama) ?>" required>
                     </div>
 
                     <div class="form-group">
                         <label for="profEmail">Alamat Email <span style="color: red;">*</span></label>
-                        <input type="email" id="profEmail" class="form-control" value="rama@example.com" required>
+                        <input type="email" id="profEmail" name="email" class="form-control" value="<?= e($email) ?>" required>
                     </div>
                     <h3
                         style="margin: 2rem 0 1.2rem; color: var(--text-dark); border-bottom: 1px solid var(--soft-border); padding-bottom: 0.5rem;">
@@ -110,7 +140,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <a href="../dashboard.html" class="btn-secondary">Batal</a>
+                        <a href="../dashboard.php" class="btn-secondary">Batal</a>
                         <button type="submit" class="btn-primary-sm">Simpan Perubahan</button>
                     </div>
 

@@ -739,3 +739,12 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* Pesan dari server (login & register PHP) */
+.auth-alert {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+.auth-alert-error { background: #fdecea; color: #b71c1c; }
+.auth-alert-info { background: #e3f2fd; color: #0d47a1; }

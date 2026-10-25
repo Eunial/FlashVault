@@ -227,7 +227,7 @@ function renderSampelDeck(grid, decks) {
 
         const tombol = document.createElement("a");
         tombol.className = "btn-primary";
-        tombol.href = "dashboard/kuis.html";
+        tombol.href = "dashboard/kuis.php";
         tombol.textContent = "Buka Deck";
 
         card.append(badge, judul, deskripsi, tombol);

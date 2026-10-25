@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <header class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="brand-logo">
+            <a href="index.php" class="brand-logo">
                 <i class="fa-solid fa-box-archive"></i>
                 <span>FlashVault</span>
             </a>
@@ -23,8 +23,8 @@
                 <a href="#fitur">Fitur</a>
                 <a href="#katalog">Katalog Deck</a>
                 <a href="#cara-kerja">Cara Kerja</a>
-                <a href="login.html" class="btn-link">Masuk</a>
-                <a href="register.html" class="btn-primary" data-toast="Mengarahkan ke halaman pendaftaran...">Daftar
+                <a href="login.php" class="btn-link">Masuk</a>
+                <a href="register.php" class="btn-primary" data-toast="Mengarahkan ke halaman pendaftaran...">Daftar
                     Gratis</a>
             </nav>
         </div>
@@ -42,7 +42,7 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="dashboard.html" class="btn-hero-primary" data-toast="Masuk ke Dashboard Utama...">Mulai
+                    <a href="dashboard.php" class="btn-hero-primary" data-toast="Masuk ke Dashboard Utama...">Mulai
                         Sekarang <i class="fa-solid fa-arrow-right"></i></a>
                     <a href="#katalog" class="btn-hero-secondary">Coba Katalog Deck</a>
                 </div>
@@ -199,7 +199,7 @@
             <p>
                 Bergabung sekarang dan rasakan kemudahan mengingat materi pelajaran.
             </p>
-            <a href="register.html" class="btn-hero-primary" data-toast="Menuju halaman pendaftaran...">Daftar Akun
+            <a href="register.php" class="btn-hero-primary" data-toast="Menuju halaman pendaftaran...">Daftar Akun
                 Gratis</a>
         </div>
     </section>

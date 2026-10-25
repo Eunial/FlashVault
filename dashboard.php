@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/includes/auth.php';
+require_login('login.php');
+$user = current_user();
+$nama = $user['nama'];
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -19,36 +25,36 @@
 
     <div class="user-card">
       <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
       </div>
       <div class="user-details">
-        <h4>Rama</h4>
+        <h4><?= e($nama) ?></h4>
         <span class="user-status">Pelajar / Mahasiswa</span>
       </div>
     </div>
 
     <div class="menu-group">
       <span class="menu-label">MENU UTAMA</span>
-      <a href="dashboard.html" class="nav-link active">
+      <a href="dashboard.php" class="nav-link active">
         <i class="fa-solid fa-chart-pie"></i>
         <span>Overview</span>
       </a>
-      <a href="dashboard/kelola-deck.html" class="nav-link">
+      <a href="dashboard/kelola-deck.php" class="nav-link">
         <i class="fa-solid fa-layer-group"></i>
         <span>Kelola Deck</span>
       </a>
-      <a href="dashboard/kuis.html" class="nav-link">
+      <a href="dashboard/kuis.php" class="nav-link">
         <i class="fa-solid fa-graduation-cap"></i>
         <span>Sesi Kuis & Review</span>
       </a>
-      <a href="dashboard/pengaturan.html" class="nav-link">
+      <a href="dashboard/pengaturan.php" class="nav-link">
         <i class="fa-solid fa-user-gear"></i>
         <span>Pengaturan Akun</span>
       </a>
     </div>
 
     <div class="sidebar-bottom">
-      <a href="login.html" class="logout-link">
+      <a href="logout.php" class="logout-link">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Keluar</span>
       </a>
@@ -61,12 +67,12 @@
 
     <header class="workspace-header">
       <div class="header-title">
-        <h1>Selamat Datang Kembali, <span id="namaPengguna">Rama</span>! 👋</h1>
+        <h1>Selamat Datang Kembali, <span id="namaPengguna"><?= e($nama) ?></span>! 👋</h1>
         <p>Berikut adalah ringkasan aktivitas dan progres belajar Anda.</p>
       </div>
       <div class="header-actions">
-        <a href="dashboard/tambah-deck.html" class="btn-primary-sm">+ Buat Deck Baru</a>
-        <a href="login.html" class="btn-header-logout">Keluar</a>
+        <a href="dashboard/tambah-deck.php" class="btn-primary-sm">+ Buat Deck Baru</a>
+        <a href="logout.php" class="btn-header-logout">Keluar</a>
       </div>
     </header>
 
@@ -124,7 +130,7 @@
                   <div class="deck-cards-count">24 dari 50 kartu dikuasai</div>
                 </div>
               </div>
-              <a href="dashboard/kuis.html" class="btn-sm btn-edit">Lanjutkan</a>
+              <a href="dashboard/kuis.php" class="btn-sm btn-edit">Lanjutkan</a>
             </li>
             <li class="deck-item">
               <div class="deck-info">
@@ -134,7 +140,7 @@
                   <div class="deck-cards-count">18 dari 30 kartu dikuasai</div>
                 </div>
               </div>
-              <a href="dashboard/kuis.html" class="btn-sm btn-edit">Lanjutkan</a>
+              <a href="dashboard/kuis.php" class="btn-sm btn-edit">Lanjutkan</a>
             </li>
           </ul>
         </div>

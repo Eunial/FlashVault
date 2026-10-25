@@ -1,26 +1,5 @@
-/*  Pop-up Boxes : Alert, Confirm, Prompt
-    Event        : addEventListener (click, input, change, submit)
-    Web Storage  : localStorage lewat FlashStore (js/storage.js) 
-*/
-
 document.addEventListener("DOMContentLoaded", () => {
     const punyaStore = typeof FlashStore !== "undefined";
-
-    /* PROFIL: nama hasil register tampil di sapaan dan kartu pengguna sidebar */
-    if (punyaStore) {
-        const user = FlashStore.getUser();
-        if (user) {
-            const sapaan = document.getElementById("namaPengguna");
-            if (sapaan) sapaan.textContent = user.nama; // textContent: aman dari XSS
-
-            document.querySelectorAll(".user-details h4").forEach(el => {
-                el.textContent = user.nama;
-            });
-            document.querySelectorAll(".user-avatar img").forEach(img => {
-                img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.nama)}&background=2196F3&color=fff`;
-            });
-        }
-    }
 
     /* CONFIRM BOX 1: Konfirmasi Keluar Akun (semua halaman dashboard) */
     document.querySelectorAll(".logout-link, .btn-header-logout").forEach(link => {
@@ -32,43 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* PENGATURAN: form profil diisi dari localStorage + simpan perubahan (pengaturan.html) */
-    const inputProfNama = document.getElementById("profNama");
-    if (punyaStore && inputProfNama) {
-        const inputProfEmail = document.getElementById("profEmail");
-        const user = FlashStore.getUser();
-        if (user) {
-            inputProfNama.value = user.nama;
-            if (user.email) inputProfEmail.value = user.email;
-        }
-
-        inputProfNama.closest("form").addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            const nama = inputProfNama.value.trim();
-            const email = inputProfEmail.value.trim();
-
-            if (nama === "") {
-                alert("Nama lengkap tidak boleh kosong!");
-                return;
-            }
-            if (!FlashStore.setUser({ nama, email })) {
-                alert("Gagal menyimpan: penyimpanan browser tidak tersedia.");
-                return;
-            }
-            alert("Profil berhasil diperbarui!");
-            window.location.href = "../dashboard.html";
-        });
-    }
-
-    /* OVERVIEW: Statistik koleksi dibaca dari localStorage (dashboard.html) */
+    /* OVERVIEW: Statistik koleksi dibaca dari localStorage (dashboard.php) */
     const statDeck = document.getElementById("statTotalDeck");
     if (punyaStore && statDeck) {
         statDeck.textContent = `${FlashStore.getDecks().length} Deck`;
         document.getElementById("statTotalKartu").textContent = `${FlashStore.totalKartu()} total kartu`;
     }
 
-    /* KELOLA DECK: Render dari localStorage + Confirm, Alert, Prompt (kelola-deck.html) */
+    /* KELOLA DECK: Render dari localStorage + Confirm, Alert, Prompt (kelola-deck.php) */
     const deckGrid = document.getElementById("deckGrid");
     if (punyaStore && deckGrid) {
         // Helper pembuat elemen. Data pengguna selalu lewat textContent (aman dari XSS).
@@ -89,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     buatEl("p", "", "Belum ada deck. Yuk buat deck pertama Anda!"),
                 );
                 const link = buatEl("a", "btn-primary-sm", "+ Buat Deck Baru");
-                link.href = "tambah-deck.html";
+                link.href = "tambah-deck.php";
                 kosong.appendChild(link);
                 deckGrid.appendChild(kosong);
                 return;
@@ -108,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const aksi = buatEl("div", "card-actions");
 
                 const btnBuka = buatEl("a", "btn-sm btn-edit");
-                btnBuka.href = "kuis.html";
+                btnBuka.href = "kuis.php";
                 btnBuka.innerHTML = '<i class="fa-solid fa-folder-open"></i> Buka';
 
                 const btnEdit = buatEl("button", "btn-sm btn-edit btn-rename");
@@ -171,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderDecks();
     }
 
-    /* EVENT CHANGE: Pratinjau Deck Langsung (tambah-deck.html) */
+    /* EVENT CHANGE: Pratinjau Deck Langsung (tambah-deck.php) */
     const selectKategori = document.getElementById("kategoriDeck");
     if (selectKategori) {
         const KATEGORI = {
@@ -213,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* ALERT BOX + LOCALSTORAGE: Simpan Deck Baru (tambah-deck.html) */
+    /* ALERT BOX + LOCALSTORAGE: Simpan Deck Baru (tambah-deck.php) */
     const formDeck = document.getElementById("namaDeck")?.closest("form");
     if (punyaStore && formDeck) {
         formDeck.addEventListener("submit", (e) => {
@@ -239,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             alert(`Deck "${nama}" berhasil disimpan!`);
-            window.location.href = "kelola-deck.html";
+            window.location.href = "kelola-deck.php";
         });
     }
 });

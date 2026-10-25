@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../includes/auth.php';
+require_login('../login.php');
+$user = current_user();
+$nama = $user['nama'];
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -19,36 +25,36 @@
 
     <div class="user-card">
       <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=Rama&background=2196F3&color=fff" alt="Foto Profil">
+        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
       </div>
       <div class="user-details">
-        <h4>Rama</h4>
+        <h4><?= e($nama) ?></h4>
         <span class="user-status">Pelajar / Mahasiswa</span>
       </div>
     </div>
 
     <div class="menu-group">
       <span class="menu-label">MENU UTAMA</span>
-      <a href="../dashboard.html" class="nav-link">
+      <a href="../dashboard.php" class="nav-link">
         <i class="fa-solid fa-chart-pie"></i>
         <span>Overview</span>
       </a>
-      <a href="kelola-deck.html" class="nav-link active">
+      <a href="kelola-deck.php" class="nav-link active">
         <i class="fa-solid fa-layer-group"></i>
         <span>Kelola Deck</span>
       </a>
-      <a href="kuis.html" class="nav-link">
+      <a href="kuis.php" class="nav-link">
         <i class="fa-solid fa-graduation-cap"></i>
         <span>Sesi Kuis & Review</span>
       </a>
-      <a href="pengaturan.html" class="nav-link">
+      <a href="pengaturan.php" class="nav-link">
         <i class="fa-solid fa-user-gear"></i>
         <span>Pengaturan Akun</span>
       </a>
     </div>
 
     <div class="sidebar-bottom">
-      <a href="../login.html" class="logout-link">
+      <a href="../logout.php" class="logout-link">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Keluar</span>
       </a>
@@ -64,7 +70,7 @@
         <p>Buat wadah materi baru sebelum menambahkan kartu flashcard.</p>
       </div>
       <div class="header-actions">
-        <a href="kelola-deck.html" class="btn-secondary">
+        <a href="kelola-deck.php" class="btn-secondary">
           <i class="fa-solid fa-arrow-left"></i> Kembali
         </a>
       </div>
@@ -72,7 +78,7 @@
 
     <section class="dashboard-section">
       <div class="form-container">
-        <form action="kelola-deck.html" method="GET">
+        <form action="kelola-deck.php" method="GET">
 
           <div class="form-group">
             <label for="namaDeck">Nama Deck <span style="color: red;">*</span></label>
@@ -112,7 +118,7 @@
           </div>
 
           <div class="form-actions">
-            <a href="kelola-deck.html" class="btn-secondary">Batal</a>
+            <a href="kelola-deck.php" class="btn-secondary">Batal</a>
             <button type="submit" class="btn-primary-sm">Simpan Deck</button>
           </div>
 
