@@ -3,6 +3,21 @@ require_once __DIR__ . '/../includes/auth.php';
 require_login('../login.php');
 $user = current_user();
 $nama = $user['nama'];
+
+include __DIR__ . '/../koneksi.php';
+$flash = get_flash();
+
+// READ: seluruh deck milik user beserta kategori dan jumlah kartunya
+$stmt = mysqli_prepare($koneksi, 'SELECT d.id_deck, d.nama_deck, d.deskripsi, k.nama_kategori, COUNT(c.id_kartu) AS jumlah_kartu
+    FROM tb_decks d
+    JOIN tb_categories k ON k.id_kategori = d.id_kategori
+    LEFT JOIN tb_cards c ON c.id_deck = d.id_deck
+    WHERE d.id_user = ?
+    GROUP BY d.id_deck, d.nama_deck, d.deskripsi, k.nama_kategori
+    ORDER BY d.created_at DESC, d.id_deck DESC');
+mysqli_stmt_bind_param($stmt, 'i', $user['id']);
+mysqli_stmt_execute($stmt);
+$decks = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -16,50 +31,7 @@ $nama = $user['nama'];
 </head>
 
 <body>
-  <!-- Sidebar Navigasi -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <h2>FlashVault</h2>
-      <p>Spaced Repetition Platform</p>
-    </div>
-
-    <div class="user-card">
-      <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
-      </div>
-      <div class="user-details">
-        <h4><?= e($nama) ?></h4>
-        <span class="user-status">Pelajar / Mahasiswa</span>
-      </div>
-    </div>
-
-    <div class="menu-group">
-      <span class="menu-label">MENU UTAMA</span>
-      <a href="../dashboard.php" class="nav-link">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Overview</span>
-      </a>
-      <a href="kelola-deck.php" class="nav-link active">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>Kelola Deck</span>
-      </a>
-      <a href="kuis.php" class="nav-link">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Sesi Kuis & Review</span>
-      </a>
-      <a href="pengaturan.php" class="nav-link">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>Pengaturan Akun</span>
-      </a>
-    </div>
-
-    <div class="sidebar-bottom">
-      <a href="../logout.php" class="logout-link">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Keluar</span>
-      </a>
-    </div>
-  </aside>
+  <?php $halaman_aktif = 'kelola'; $root = '../'; include __DIR__ . '/../includes/sidebar.php'; ?>
 
   <!-- Area Kerja Utama -->
   <main class="main-workspace">
@@ -75,13 +47,40 @@ $nama = $user['nama'];
       </div>
     </header>
 
-        <section class="dashboard-section">
-      <!-- Kartu deck dirender oleh js/dashboard.js dari localStorage -->
-      <div class="grid-2" id="deckGrid"></div>
+    <section class="dashboard-section">
+      <?php if ($flash): ?>
+        <div class="flash flash-<?= e($flash['tipe']) ?>"><?= e($flash['pesan']) ?></div>
+      <?php endif; ?>
+
+      <div class="grid-2" id="deckGrid">
+        <?php if (count($decks) === 0): ?>
+          <div class="empty-state">
+            <p>Belum ada deck. Yuk buat deck pertama Anda!</p>
+            <a href="tambah-deck.php" class="btn-primary-sm">+ Buat Deck Baru</a>
+          </div>
+        <?php endif; ?>
+
+        <?php foreach ($decks as $d): ?>
+          <div class="card-item">
+            <div>
+              <h4><?= e($d['nama_deck']) ?></h4>
+              <p><?= (int) $d['jumlah_kartu'] ?> Kartu • Kategori: <?= e($d['nama_kategori']) ?></p>
+            </div>
+            <div class="card-actions">
+              <a href="kuis.php" class="btn-sm btn-edit"><i class="fa-solid fa-folder-open"></i> Buka</a>
+              <a href="edit-deck.php?id=<?= (int) $d['id_deck'] ?>" class="btn-sm btn-edit"><i class="fa-solid fa-pen"></i> Edit</a>
+              <form action="deck-proses.php" method="post" class="form-hapus" data-nama="<?= e($d['nama_deck']) ?>" style="display:inline">
+                <input type="hidden" name="aksi" value="hapus">
+                <input type="hidden" name="id_deck" value="<?= (int) $d['id_deck'] ?>">
+                <button type="submit" class="btn-sm btn-delete"><i class="fa-solid fa-trash"></i> Hapus</button>
+              </form>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </section>
   </main>
 
-  <script src="../js/storage.js"></script>
   <script src="../js/dashboard.js"></script>
 </body>
 </html>

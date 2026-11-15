@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const punyaStore = typeof FlashStore !== "undefined";
-
-    /* CONFIRM BOX 1: Konfirmasi Keluar Akun (semua halaman dashboard) */
+        /* CONFIRM BOX 1: Konfirmasi Keluar Akun (semua halaman dashboard) */
     document.querySelectorAll(".logout-link, .btn-header-logout").forEach(link => {
         link.addEventListener("click", (e) => {
             const yakin = confirm("Apakah Anda yakin ingin keluar dari FlashVault?");
@@ -11,115 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* OVERVIEW: Statistik koleksi dibaca dari localStorage (dashboard.php) */
-    const statDeck = document.getElementById("statTotalDeck");
-    if (punyaStore && statDeck) {
-        statDeck.textContent = `${FlashStore.getDecks().length} Deck`;
-        document.getElementById("statTotalKartu").textContent = `${FlashStore.totalKartu()} total kartu`;
-    }
-
-    /* KELOLA DECK: Render dari localStorage + Confirm, Alert, Prompt (kelola-deck.php) */
-    const deckGrid = document.getElementById("deckGrid");
-    if (punyaStore && deckGrid) {
-        // Helper pembuat elemen. Data pengguna selalu lewat textContent (aman dari XSS).
-        const buatEl = (tag, kelas, teks) => {
-            const el = document.createElement(tag);
-            if (kelas) el.className = kelas;
-            if (teks !== undefined) el.textContent = teks;
-            return el;
-        };
-
-        function renderDecks() {
-            const decks = FlashStore.getDecks();
-            deckGrid.innerHTML = "";
-
-            if (decks.length === 0) {
-                const kosong = buatEl("div", "empty-state");
-                kosong.append(
-                    buatEl("p", "", "Belum ada deck. Yuk buat deck pertama Anda!"),
-                );
-                const link = buatEl("a", "btn-primary-sm", "+ Buat Deck Baru");
-                link.href = "tambah-deck.php";
-                kosong.appendChild(link);
-                deckGrid.appendChild(kosong);
-                return;
-            }
-
-            decks.forEach(deck => {
-                const card = buatEl("div", "card-item");
-                card.dataset.id = deck.id;
-
-                const info = document.createElement("div");
-                info.append(
-                    buatEl("h4", "", deck.nama),
-                    buatEl("p", "", `${deck.jumlahKartu} Kartu • Kategori: ${deck.kategori}`)
-                );
-
-                const aksi = buatEl("div", "card-actions");
-
-                const btnBuka = buatEl("a", "btn-sm btn-edit");
-                btnBuka.href = "kuis.php";
-                btnBuka.innerHTML = '<i class="fa-solid fa-folder-open"></i> Buka';
-
-                const btnEdit = buatEl("button", "btn-sm btn-edit btn-rename");
-                btnEdit.type = "button";
-                btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i> Edit';
-
-                const btnHapus = buatEl("button", "btn-sm btn-delete");
-                btnHapus.type = "button";
-                btnHapus.innerHTML = '<i class="fa-solid fa-trash"></i> Hapus';
-
-                aksi.append(btnBuka, btnEdit, btnHapus);
-                card.append(info, aksi);
-                deckGrid.appendChild(card);
-            });
-        }
-
-        // Event delegation: satu listener untuk semua tombol, termasuk kartu yang dibuat dinamis
-        deckGrid.addEventListener("click", (e) => {
-            const tombol = e.target.closest(".btn-delete, .btn-rename");
-            if (!tombol) return;
-
-            const card = tombol.closest(".card-item");
-            const id = card.dataset.id;
-            const deck = FlashStore.getDecks().find(d => d.id === id);
-            if (!deck) return;
-
-            if (tombol.classList.contains("btn-delete")) {
-                /* CONFIRM BOX 2 + ALERT BOX */
-                const yakin = confirm(`Hapus deck "${deck.nama}"?\nSemua kartu di dalamnya akan ikut terhapus.`);
-                if (!yakin) return;
-
-                if (FlashStore.deleteDeck(id)) {
-                    renderDecks();
-                    alert(`Deck "${deck.nama}" berhasil dihapus.`);
-                } else {
-                    alert("Gagal menghapus: penyimpanan browser tidak tersedia.");
-                }
-            } else {
-                /* PROMPT BOX: ubah nama deck */
-                const namaBaru = prompt("Ubah nama deck:", deck.nama);
-                if (namaBaru === null) return; // pengguna menekan Cancel
-
-                const bersih = namaBaru.trim();
-                if (bersih === "") {
-                    alert("Nama deck tidak boleh kosong!");
-                    return;
-                }
-                if (bersih.toLowerCase() !== deck.nama.toLowerCase() && FlashStore.exists(bersih)) {
-                    alert(`Deck bernama "${bersih}" sudah ada!`);
-                    return;
-                }
-                if (FlashStore.renameDeck(id, bersih)) {
-                    renderDecks();
-                } else {
-                    alert("Gagal menyimpan: penyimpanan browser tidak tersedia.");
-                }
-            }
+    /* CONFIRM BOX 2: Konfirmasi hapus deck (kelola-deck.php) - data dihapus lewat PHP + MySQL */
+    document.querySelectorAll(".form-hapus").forEach(form => {
+        form.addEventListener("submit", (e) => {
+            const yakin = confirm(`Hapus deck "${form.dataset.nama}"?\nSemua kartu di dalamnya akan ikut terhapus.`);
+            if (!yakin) e.preventDefault();
         });
-
-        renderDecks();
-    }
+    });
 
     /* EVENT CHANGE: Pratinjau Deck Langsung (tambah-deck.php) */
     const selectKategori = document.getElementById("kategoriDeck");
@@ -142,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Event change: kategori dipilih -> warna, ikon, dan badge ikut berubah
         selectKategori.addEventListener("change", () => {
-            const kategori = selectKategori.value;
+            const kategori = selectKategori.selectedOptions[0]?.text || "";
             const gaya = KATEGORI[kategori];
             if (!gaya) return;
 
@@ -155,41 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => previewIcon.classList.remove("pop"), 250);
         });
 
+        // Halaman edit: kategori sudah terpilih dari database -> tampilkan pratinjaunya
+        if (selectKategori.value !== "") selectKategori.dispatchEvent(new Event("change"));
+
         // Nama deck ikut tampil langsung saat diketik
         inputNama.addEventListener("input", () => {
             const nama = inputNama.value.trim();
             previewName.textContent = nama === "" ? "Nama deck Anda" : nama;
             preview.dataset.empty = nama === "" ? "true" : "false";
-        });
-    }
-
-    /* ALERT BOX + LOCALSTORAGE: Simpan Deck Baru (tambah-deck.php) */
-    const formDeck = document.getElementById("namaDeck")?.closest("form");
-    if (punyaStore && formDeck) {
-        formDeck.addEventListener("submit", (e) => {
-            e.preventDefault(); // kita yang mengatur perpindahan halaman setelah data tersimpan
-
-            const nama = document.getElementById("namaDeck").value.trim();
-            const kategori = document.getElementById("kategoriDeck").value || "Lainnya";
-            const deskripsi = document.getElementById("deskripsiDeck").value.trim();
-
-            if (nama === "") {
-                alert("Nama deck tidak boleh kosong!");
-                return;
-            }
-            if (FlashStore.exists(nama)) {
-                alert(`Deck bernama "${nama}" sudah ada. Gunakan nama lain!`);
-                return;
-            }
-
-            const deckBaru = FlashStore.addDeck({ nama, kategori, deskripsi });
-            if (!deckBaru) {
-                alert("Gagal menyimpan: penyimpanan browser tidak tersedia.");
-                return;
-            }
-
-            alert(`Deck "${nama}" berhasil disimpan!`);
-            window.location.href = "kelola-deck.php";
         });
     }
 });

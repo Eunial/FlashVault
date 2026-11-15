@@ -16,50 +16,7 @@ $nama = $user['nama'];
 </head>
 
 <body>
-  <!-- Sidebar Navigasi -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <h2>FlashVault</h2>
-      <p>Spaced Repetition Platform</p>
-    </div>
-
-    <div class="user-card">
-      <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
-      </div>
-      <div class="user-details">
-        <h4><?= e($nama) ?></h4>
-        <span class="user-status">Pelajar / Mahasiswa</span>
-      </div>
-    </div>
-
-    <div class="menu-group">
-      <span class="menu-label">MENU UTAMA</span>
-      <a href="../dashboard.php" class="nav-link">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Overview</span>
-      </a>
-      <a href="kelola-deck.php" class="nav-link">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>Kelola Deck</span>
-      </a>
-      <a href="kuis.php" class="nav-link active">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Sesi Kuis & Review</span>
-      </a>
-      <a href="pengaturan.php" class="nav-link">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>Pengaturan Akun</span>
-      </a>
-    </div>
-
-    <div class="sidebar-bottom">
-      <a href="../logout.php" class="logout-link">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Keluar</span>
-      </a>
-    </div>
-  </aside>
+  <?php $halaman_aktif = 'kuis'; $root = '../'; include __DIR__ . '/../includes/sidebar.php'; ?>
 
   <!-- Area Kerja Utama -->
   <main class="main-workspace">
@@ -118,7 +75,6 @@ $nama = $user['nama'];
     </section>
   </main>
 
-  <script src="../js/storage.js"></script>
   <script src="../js/dashboard.js"></script>
 </body>
 </html>

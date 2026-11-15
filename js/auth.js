@@ -19,7 +19,5 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Kata sandi minimal 8 karakter!");
             return;
         }
-
-        alert(`Selamat datang, ${nama}! Akun Anda berhasil dibuat.`);
     });
 });

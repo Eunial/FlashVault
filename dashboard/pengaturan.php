@@ -15,11 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($emailBaru, FILTER_VALIDATE_EMAIL)) {
         $error = 'Format email tidak valid.';
     } else {
-        $_SESSION['user'] = ['nama' => $namaBaru, 'email' => $emailBaru];
-        setcookie('fv_nama', $namaBaru, time() + 7 * 24 * 60 * 60, '/');
-        setcookie('fv_email', $emailBaru, time() + 7 * 24 * 60 * 60, '/');
-        header('Location: ../dashboard.php');
-        exit;
+        // UPDATE profil user di database
+        include __DIR__ . '/../koneksi.php';
+        $cek = mysqli_prepare($koneksi, 'SELECT 1 FROM tb_users WHERE email = ? AND id_user <> ?');
+        mysqli_stmt_bind_param($cek, 'si', $emailBaru, $user['id']);
+        mysqli_stmt_execute($cek);
+        mysqli_stmt_store_result($cek);
+        if (mysqli_stmt_num_rows($cek) > 0) {
+            $error = 'Email sudah dipakai akun lain.';
+        } else {
+            $stmt = mysqli_prepare($koneksi, 'UPDATE tb_users SET nama = ?, email = ? WHERE id_user = ?');
+            mysqli_stmt_bind_param($stmt, 'ssi', $namaBaru, $emailBaru, $user['id']);
+            mysqli_stmt_execute($stmt);
+            login_user($user['id'], $namaBaru, $emailBaru); // perbarui sesi (id tetap)
+            header('Location: ../dashboard.php');
+            exit;
+        }
     }
     $nama = $namaBaru; // pertahankan isian jika error
     $email = $emailBaru;
@@ -37,53 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- Sidebar Navigasi (Identik dengan sub-halaman dashboard lainnya) -->
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <h2>FlashVault</h2>
-            <p>Spaced Repetition Platform</p>
-        </div>
-
-        <!-- User Profile Card -->
-        <div class="user-card">
-            <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
-            </div>
-            <div class="user-details">
-                <h4><?= e($nama) ?></h4>
-                <span class="user-status">Pelajar / Mahasiswa</span>
-            </div>
-        </div>
-
-        <!-- Menu Utama -->
-        <div class="menu-group">
-            <span class="menu-label">MENU UTAMA</span>
-            <a href="../dashboard.php" class="nav-link">
-                <i class="fa-solid fa-chart-pie"></i>
-                <span>Overview</span>
-            </a>
-            <a href="kelola-deck.php" class="nav-link">
-                <i class="fa-solid fa-layer-group"></i>
-                <span>Kelola Deck</span>
-            </a>
-            <a href="kuis.php" class="nav-link">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>Sesi Kuis & Review</span>
-            </a>
-            <a href="pengaturan.php" class="nav-link active">
-                <i class="fa-solid fa-user-gear"></i>
-                <span>Pengaturan Akun</span>
-            </a>
-        </div>
-
-        <!-- Sidebar Bottom / Logout -->
-        <div class="sidebar-bottom">
-            <a href="../logout.php" class="logout-link">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>
-        </div>
-    </aside>
+  <?php $halaman_aktif = 'pengaturan'; $root = '../'; include __DIR__ . '/../includes/sidebar.php'; ?>
 
     <!-- Area Kerja Utama -->
     <main class="main-workspace">
@@ -148,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </section>
     </main>
-    <script src="../js/storage.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
 </html>

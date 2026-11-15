@@ -3,6 +3,12 @@ require_once __DIR__ . '/../includes/auth.php';
 require_login('../login.php');
 $user = current_user();
 $nama = $user['nama'];
+
+include __DIR__ . '/../koneksi.php';
+$flash = get_flash();
+$old = $_SESSION['old'] ?? [];
+unset($_SESSION['old']);
+$kategori = mysqli_fetch_all(mysqli_query($koneksi, 'SELECT id_kategori, nama_kategori FROM tb_categories ORDER BY id_kategori'), MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -16,50 +22,7 @@ $nama = $user['nama'];
 </head>
 
 <body>
-  <!-- Sidebar Navigasi -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <h2>FlashVault</h2>
-      <p>Spaced Repetition Platform</p>
-    </div>
-
-    <div class="user-card">
-      <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
-      </div>
-      <div class="user-details">
-        <h4><?= e($nama) ?></h4>
-        <span class="user-status">Pelajar / Mahasiswa</span>
-      </div>
-    </div>
-
-    <div class="menu-group">
-      <span class="menu-label">MENU UTAMA</span>
-      <a href="../dashboard.php" class="nav-link">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Overview</span>
-      </a>
-      <a href="kelola-deck.php" class="nav-link active">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>Kelola Deck</span>
-      </a>
-      <a href="kuis.php" class="nav-link">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Sesi Kuis & Review</span>
-      </a>
-      <a href="pengaturan.php" class="nav-link">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>Pengaturan Akun</span>
-      </a>
-    </div>
-
-    <div class="sidebar-bottom">
-      <a href="../logout.php" class="logout-link">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Keluar</span>
-      </a>
-    </div>
-  </aside>
+  <?php $halaman_aktif = 'kelola'; $root = '../'; include __DIR__ . '/../includes/sidebar.php'; ?>
 
   <!-- Area Kerja Utama -->
   <main class="main-workspace">
@@ -78,24 +41,25 @@ $nama = $user['nama'];
 
     <section class="dashboard-section">
       <div class="form-container">
-        <form action="kelola-deck.php" method="GET">
+        <?php if ($flash): ?>
+          <div class="flash flash-<?= e($flash['tipe']) ?>"><?= e($flash['pesan']) ?></div>
+        <?php endif; ?>
+        <form action="deck-proses.php" method="post">
+          <input type="hidden" name="aksi" value="tambah">
 
           <div class="form-group">
             <label for="namaDeck">Nama Deck <span style="color: red;">*</span></label>
-            <input type="text" id="namaDeck" class="form-control" placeholder="Contoh: Fundamental React Native"
-              required>
+            <input type="text" id="namaDeck" name="nama_deck" class="form-control" maxlength="100"
+              value="<?= e($old['nama_deck'] ?? '') ?>" placeholder="Contoh: Fundamental React Native" required>
           </div>
 
           <div class="form-group">
             <label for="kategoriDeck">Kategori <span style="color: red;">*</span></label>
-            <select id="kategoriDeck" class="form-control" required>
-              <option value="" disabled selected>-- Pilih Kategori --</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Mobile Development">Mobile Development</option>
-              <option value="Frontend">Frontend</option>
-              <option value="Backend">Backend</option>
-              <option value="Data Science & ML">Data Science & ML</option>
-              <option value="Lainnya">Lainnya</option>
+            <select id="kategoriDeck" name="id_kategori" class="form-control" required>
+              <option value="" disabled <?= empty($old['id_kategori']) ? 'selected' : '' ?>>-- Pilih Kategori --</option>
+              <?php foreach ($kategori as $k): ?>
+                <option value="<?= (int) $k['id_kategori'] ?>" <?= ((int) ($old['id_kategori'] ?? 0)) === (int) $k['id_kategori'] ? 'selected' : '' ?>><?= e($k['nama_kategori']) ?></option>
+              <?php endforeach; ?>
             </select>
           </div>
 
@@ -113,8 +77,8 @@ $nama = $user['nama'];
 
           <div class="form-group">
             <label for="deskripsiDeck">Deskripsi / Catatan Deck</label>
-            <textarea id="deskripsiDeck" class="form-control"
-              placeholder="Rangkuman singkat tentang topik deck ini..."></textarea>
+            <textarea id="deskripsiDeck" name="deskripsi" class="form-control"
+              placeholder="Rangkuman singkat tentang topik deck ini..."><?= e($old['deskripsi'] ?? '') ?></textarea>
           </div>
 
           <div class="form-actions">
@@ -127,7 +91,6 @@ $nama = $user['nama'];
     </section>
   </main>
   
-  <script src="../js/storage.js"></script>
   <script src="../js/dashboard.js"></script>
 </body>
 </html>

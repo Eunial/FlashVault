@@ -7,30 +7,13 @@ if (current_user() !== null) {
     exit;
 }
 
-$error = '';
-$email = $_COOKIE['fv_email'] ?? ''; // cookie: isi otomatis email terakhir
-$info  = (($_GET['pesan'] ?? '') === 'logout') ? 'Anda sudah keluar. Sampai jumpa!' : '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-
-    if ($email === '' || $password === '') {
-        $error = 'Email dan kata sandi wajib diisi.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Format email tidak valid.';
-    } else {
-        // Belum ada database: pakai nama dari cookie jika email cocok, selain itu dari bagian depan email
-        if (($_COOKIE['fv_email'] ?? '') === $email && !empty($_COOKIE['fv_nama'])) {
-            $nama = $_COOKIE['fv_nama'];
-        } else {
-            $nama = ucfirst(explode('@', $email)[0]);
-        }
-        login_user($nama, $email);
-        header('Location: dashboard.php');
-        exit;
-    }
-}
+// Pesan dari login-proses.php / register-proses.php / logout.php
+$flash = get_flash();
+$error = ($flash['tipe'] ?? '') === 'error' ? $flash['pesan'] : '';
+$sukses = ($flash['tipe'] ?? '') === 'success' ? $flash['pesan'] : '';
+$info  = (($_GET['pesan'] ?? '') === 'logout') ? 'Anda sudah keluar. Sampai jumpa!' : $sukses;
+$email = $_SESSION['old']['email'] ?? ($_COOKIE['fv_email'] ?? '');
+unset($_SESSION['old']);
 ?>
 <!doctype html>
 <html lang="id">
@@ -62,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-alert auth-alert-error"><?= e($error) ?></div>
             <?php endif; ?>
 
-            <form action="login.php" method="POST" class="auth-form">
+            <form action="login-proses.php" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="loginEmail">Alamat Email</label>
                     <input type="email" id="loginEmail" name="email" value="<?= e($email) ?>" class="form-control" placeholder="nama@email.com" required />
@@ -73,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="loginPassword" name="password" class="form-control" placeholder="••••••••" required />
                 </div>
 
-                <button type="submit" class="btn-auth-submit">
+                <button type="submit" name="login" class="btn-auth-submit">
                     Masuk ke Dashboard
                 </button>
             </form>

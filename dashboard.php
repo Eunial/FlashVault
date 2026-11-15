@@ -3,6 +3,14 @@ require_once __DIR__ . '/includes/auth.php';
 require_login('login.php');
 $user = current_user();
 $nama = $user['nama'];
+
+include __DIR__ . '/koneksi.php';
+// READ: statistik koleksi dari database
+$stmt = mysqli_prepare($koneksi, 'SELECT COUNT(DISTINCT d.id_deck) AS total_deck, COUNT(c.id_kartu) AS total_kartu
+    FROM tb_decks d LEFT JOIN tb_cards c ON c.id_deck = d.id_deck WHERE d.id_user = ?');
+mysqli_stmt_bind_param($stmt, 'i', $user['id']);
+mysqli_stmt_execute($stmt);
+$stat = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -16,51 +24,7 @@ $nama = $user['nama'];
 </head>
 
 <body>
-  <!-- Sidebar Navigasi -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <h2>FlashVault</h2>
-      <p>Spaced Repetition Platform</p>
-    </div>
-
-    <div class="user-card">
-      <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=<?= urlencode($nama) ?>&background=2196F3&color=fff" alt="Foto Profil">
-      </div>
-      <div class="user-details">
-        <h4><?= e($nama) ?></h4>
-        <span class="user-status">Pelajar / Mahasiswa</span>
-      </div>
-    </div>
-
-    <div class="menu-group">
-      <span class="menu-label">MENU UTAMA</span>
-      <a href="dashboard.php" class="nav-link active">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Overview</span>
-      </a>
-      <a href="dashboard/kelola-deck.php" class="nav-link">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>Kelola Deck</span>
-      </a>
-      <a href="dashboard/kuis.php" class="nav-link">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Sesi Kuis & Review</span>
-      </a>
-      <a href="dashboard/pengaturan.php" class="nav-link">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>Pengaturan Akun</span>
-      </a>
-    </div>
-
-    <div class="sidebar-bottom">
-      <a href="logout.php" class="logout-link">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Keluar</span>
-      </a>
-      </a>
-    </div>
-  </aside>
+  <?php $halaman_aktif = 'dashboard'; $root = ''; include __DIR__ . '/includes/sidebar.php'; ?>
 
   <!-- Area Kerja Utama -->
   <main class="main-workspace">
@@ -93,8 +57,8 @@ $nama = $user['nama'];
             <i class="fa-solid fa-layer-group" style="color: #2e7d32;"></i>
           </div>
           <span class="stat-caption">TOTAL KOLEKSI</span>
-          <div class="stat-number" id="statTotalDeck">12 Deck</div>
-          <span class="stat-subtext" id="statTotalKartu">250 total kartu</span>
+          <div class="stat-number" id="statTotalDeck"><?= (int) $stat['total_deck'] ?> Deck</div>
+          <span class="stat-subtext" id="statTotalKartu"><?= (int) $stat['total_kartu'] ?> total kartu</span>
         </div>
 
         <div class="stat-box">
@@ -170,7 +134,6 @@ $nama = $user['nama'];
     </section>
   </main>
 
-  <script src="js/storage.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
 

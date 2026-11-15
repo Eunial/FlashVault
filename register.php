@@ -6,27 +6,12 @@ if (current_user() !== null) {
     exit;
 }
 
-$error = '';
-$nama = $email = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama     = trim($_POST['nama'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-
-    if ($nama === '' || $email === '' || $password === '') {
-        $error = 'Semua field wajib diisi.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Format email tidak valid.';
-    } elseif (strlen($password) < 8) {
-        $error = 'Kata sandi minimal 8 karakter.';
-    } else {
-        // Nama disimpan di SESSION (+ cookie); kata sandi tidak disimpan
-        login_user($nama, $email);
-        header('Location: dashboard.php');
-        exit;
-    }
-}
+// Pesan dari register-proses.php
+$flash = get_flash();
+$error = ($flash['tipe'] ?? '') === 'error' ? $flash['pesan'] : '';
+$nama  = $_SESSION['old']['nama'] ?? '';
+$email = $_SESSION['old']['email'] ?? '';
+unset($_SESSION['old']);
 ?>
 <!doctype html>
 <html lang="id">
@@ -55,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-alert auth-alert-error"><?= e($error) ?></div>
             <?php endif; ?>
 
-            <form action="register.php" method="POST" class="auth-form">
+            <form action="register-proses.php" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="regNama">Nama Lengkap</label>
                     <input type="text" id="regNama" name="nama" value="<?= e($nama) ?>" class="form-control" placeholder="Contoh: Rama" required />
@@ -72,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         required />
                 </div>
 
-                <button type="submit" class="btn-auth-submit">
+                <button type="submit" name="register" class="btn-auth-submit">
                     Daftar Akun Gratis
                 </button>
             </form>
@@ -84,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php" class="back-home-link"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
         </div>
     </div>
-    <script src="js/storage.js"></script>
     <script src="js/auth.js"></script>
 </body>
 </html>
